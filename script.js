@@ -272,7 +272,12 @@ class Game2048 {
         grid.addEventListener('touchstart', (e) => {
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
-        }, { passive: true });
+            e.preventDefault();
+        }, { passive: false });
+        
+        grid.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        }, { passive: false });
         
         grid.addEventListener('touchend', (e) => {
             if (this.gameOver) return;

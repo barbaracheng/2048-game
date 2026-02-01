@@ -17,24 +17,23 @@
     <div class="container">
         <header class="header">
             <h1 class="title">2048</h1>
-            <div class="score-container">
-                <div class="score-box">
-                    <span class="score-label">得分</span>
-                    <span id="score" class="score-value">0</span>
+            <div class="header-right">
+                <div class="score-container">
+                    <div class="score-box">
+                        <span class="score-label">得分</span>
+                        <span id="score" class="score-value">0</span>
+                    </div>
+                    <div class="score-box">
+                        <span class="score-label">最高分</span>
+                        <span id="best-score" class="score-value">0</span>
+                    </div>
                 </div>
-                <div class="score-box">
-                    <span class="score-label">最高分</span>
-                    <span id="best-score" class="score-value">0</span>
-                </div>
+                <button id="new-game" class="btn btn-primary">
+                    <span class="btn-icon">↻</span>
+                    新游戏
+                </button>
             </div>
         </header>
-        
-        <div class="controls">
-            <button id="new-game" class="btn btn-primary">
-                <span class="btn-icon">↻</span>
-                新游戏
-            </button>
-        </div>
         
         <p class="instructions">使用方向键、WASD 或滑动移动方块</p>
         

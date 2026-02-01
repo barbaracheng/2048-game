@@ -81,7 +81,7 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-    gap: 20px;
+    gap: 16px;
 }
 
 .title {
@@ -92,6 +92,16 @@ body {
     letter-spacing: -2px;
     text-shadow: 2px 2px 0 rgba(0,0,0,0.05);
     line-height: 1;
+    flex-shrink: 0;
+}
+
+/* Header Right - Scores and Button */
+.header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+    flex-shrink: 0;
 }
 
 /* Score Container */
@@ -102,10 +112,10 @@ body {
 
 .score-box {
     background: linear-gradient(145deg, #bbada0, #a89a8a);
-    padding: 12px 20px;
+    padding: 10px 16px;
     border-radius: 8px;
-    min-width: 90px;
-    box-shadow: 
+    min-width: 75px;
+    box-shadow:
         0 4px 8px var(--shadow-light),
         inset 0 1px 0 rgba(255,255,255,0.1);
     transition: transform var(--transition-fast);
@@ -117,17 +127,17 @@ body {
 
 .score-label {
     display: block;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
 }
 
 .score-value {
     display: block;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 700;
     color: white;
     text-shadow: 0 1px 2px rgba(0,0,0,0.1);
@@ -156,41 +166,42 @@ body {
     background: linear-gradient(145deg, #8f7a66, #7f6a56);
     color: white;
     border: none;
-    padding: 12px 28px;
+    padding: 10px 20px;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     font-family: inherit;
     transition: all var(--transition-fast);
-    box-shadow: 
+    box-shadow:
         0 4px 12px rgba(143, 122, 102, 0.4),
         inset 0 1px 0 rgba(255,255,255,0.1);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     user-select: none;
     -webkit-user-select: none;
+    white-space: nowrap;
 }
 
 .btn:hover {
     background: linear-gradient(145deg, #9f8a76, #8f7a66);
     transform: translateY(-2px);
-    box-shadow: 
+    box-shadow:
         0 6px 16px rgba(143, 122, 102, 0.5),
         inset 0 1px 0 rgba(255,255,255,0.1);
 }
 
 .btn:active {
     transform: translateY(0);
-    box-shadow: 
+    box-shadow:
         0 2px 8px rgba(143, 122, 102, 0.4),
         inset 0 1px 0 rgba(255,255,255,0.1);
 }
 
 .btn-icon {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
 }
 
@@ -212,6 +223,7 @@ body {
 .grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
     gap: 12px;
     background: linear-gradient(145deg, #bbada0, #a89a8a);
     padding: 12px;
@@ -220,7 +232,7 @@ body {
     max-width: 400px;
     aspect-ratio: 1;
     margin: 0 auto;
-    box-shadow: 
+    box-shadow:
         0 8px 24px rgba(187, 173, 160, 0.5),
         inset 0 2px 0 rgba(255,255,255,0.1);
     position: relative;
@@ -237,6 +249,7 @@ body {
     bottom: 12px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
     gap: 12px;
     pointer-events: none;
     z-index: 0;
@@ -251,6 +264,7 @@ body {
     height: 100%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
     gap: 12px;
 }
 
@@ -261,15 +275,20 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 36px;
+    font-size: clamp(24px, 8vw, 36px);
     font-weight: 700;
     color: #776e65;
     transition: all var(--transition-normal);
     position: relative;
     z-index: 1;
-    box-shadow: 
+    box-shadow:
         0 4px 8px var(--shadow-light),
         inset 0 2px 0 rgba(255,255,255,0.2);
+    /* Ensure fixed size - cell size doesn't change with content */
+    aspect-ratio: 1;
+    overflow: hidden;
+    word-break: break-all;
+    padding: 4px;
 }
 
 /* Tile Colors */
@@ -307,46 +326,46 @@ body {
     box-shadow: 0 4px 12px rgba(246, 94, 59, 0.4);
 }
 
-.cell[data-value="128"] { 
-    background: linear-gradient(145deg, #edcf72, #e3c268); 
-    color: #f9f6f2; 
-    font-size: 32px;
+.cell[data-value="128"] {
+    background: linear-gradient(145deg, #edcf72, #e3c268);
+    color: #f9f6f2;
+    font-size: clamp(22px, 7vw, 32px);
     box-shadow: 0 4px 12px rgba(237, 207, 114, 0.4);
 }
 
-.cell[data-value="256"] { 
-    background: linear-gradient(145deg, #edcc61, #e3be57); 
-    color: #f9f6f2; 
-    font-size: 32px;
+.cell[data-value="256"] {
+    background: linear-gradient(145deg, #edcc61, #e3be57);
+    color: #f9f6f2;
+    font-size: clamp(22px, 7vw, 32px);
     box-shadow: 0 4px 12px rgba(237, 204, 97, 0.4);
 }
 
-.cell[data-value="512"] { 
-    background: linear-gradient(145deg, #edc850, #e3ba46); 
-    color: #f9f6f2; 
-    font-size: 32px;
+.cell[data-value="512"] {
+    background: linear-gradient(145deg, #edc850, #e3ba46);
+    color: #f9f6f2;
+    font-size: clamp(22px, 7vw, 32px);
     box-shadow: 0 4px 12px rgba(237, 200, 80, 0.4);
 }
 
-.cell[data-value="1024"] { 
-    background: linear-gradient(145deg, #edc53f, #e3b735); 
-    color: #f9f6f2; 
-    font-size: 28px;
+.cell[data-value="1024"] {
+    background: linear-gradient(145deg, #edc53f, #e3b735);
+    color: #f9f6f2;
+    font-size: clamp(20px, 6.5vw, 28px);
     box-shadow: 0 4px 12px rgba(237, 197, 63, 0.4);
 }
 
-.cell[data-value="2048"] { 
-    background: linear-gradient(145deg, #edc22e, #e3b424); 
-    color: #f9f6f2; 
-    font-size: 28px;
+.cell[data-value="2048"] {
+    background: linear-gradient(145deg, #edc22e, #e3b424);
+    color: #f9f6f2;
+    font-size: clamp(20px, 6.5vw, 28px);
     box-shadow: 0 4px 12px rgba(237, 194, 46, 0.5);
     animation: glow 2s ease-in-out infinite alternate;
 }
 
-.cell[data-value^="40"], .cell[data-value^="81"] { 
-    background: linear-gradient(145deg, #3c3a32, #2e2c26); 
-    color: #f9f6f2; 
-    font-size: 24px;
+.cell[data-value^="40"], .cell[data-value^="81"] {
+    background: linear-gradient(145deg, #3c3a32, #2e2c26);
+    color: #f9f6f2;
+    font-size: clamp(18px, 6vw, 24px);
 }
 
 /* Glow Animation for 2048 */
@@ -475,183 +494,216 @@ body {
 /* Extra Small Devices (phones, 320px and up) */
 @media (max-width: 360px) {
     .container {
-        padding: 16px;
+        padding: 12px;
     }
-    
+
     .title {
-        font-size: 48px;
+        font-size: 40px;
     }
-    
+
     .header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
+        gap: 10px;
     }
-    
+
+    .header-right {
+        gap: 8px;
+    }
+
     .score-box {
-        min-width: 75px;
-        padding: 10px 16px;
+        min-width: 60px;
+        padding: 8px 12px;
     }
-    
+
+    .score-label {
+        font-size: 10px;
+    }
+
     .score-value {
-        font-size: 18px;
+        font-size: 15px;
     }
-    
+
     .grid {
         gap: 8px;
         padding: 8px;
         border-radius: 8px;
+        max-width: 100%;
     }
-    
+
     .cell {
-        font-size: 24px;
         border-radius: 6px;
     }
-    
-    .cell[data-value="128"], 
-    .cell[data-value="256"], 
-    .cell[data-value="512"] {
-        font-size: 20px;
-    }
-    
-    .cell[data-value="1024"],
-    .cell[data-value="2048"] {
-        font-size: 18px;
-    }
-    
+
     .btn {
-        padding: 10px 20px;
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+
+    .btn-icon {
         font-size: 14px;
     }
-    
-    .overlay-content {
-        padding: 32px 40px;
-        width: 90%;
-        max-width: 320px;
+
+    .instructions {
+        font-size: 13px;
+        margin-bottom: 16px;
     }
-    
+
+    .overlay-content {
+        padding: 28px 32px;
+        width: 90%;
+        max-width: 280px;
+    }
+
     .overlay-title {
-        font-size: 36px;
+        font-size: 32px;
+    }
+
+    .overlay-score {
+        font-size: 16px;
     }
 }
 
-/* Small Devices (landscape phones, 360px to 500px) */
+/* Small Devices (landscape phones, 361px to 500px) */
 @media (min-width: 361px) and (max-width: 500px) {
-    .title {
-        font-size: 56px;
+    .container {
+        padding: 16px;
     }
-    
+
+    .title {
+        font-size: 48px;
+    }
+
+    .score-box {
+        min-width: 65px;
+        padding: 9px 14px;
+    }
+
+    .score-value {
+        font-size: 16px;
+    }
+
     .grid {
         gap: 10px;
         padding: 10px;
     }
-    
-    .cell {
-        font-size: 28px;
-    }
-    
-    .cell[data-value="128"], 
-    .cell[data-value="256"], 
-    .cell[data-value="512"] {
-        font-size: 24px;
-    }
-    
-    .cell[data-value="1024"],
-    .cell[data-value="2048"] {
-        font-size: 22px;
-    }
-    
-    .score-box {
-        min-width: 80px;
-        padding: 10px 18px;
-    }
-    
+
     .instructions {
         font-size: 14px;
+        margin-bottom: 20px;
     }
-    
+
     .overlay-content {
-        padding: 36px 48px;
+        padding: 32px 40px;
         width: 85%;
-        max-width: 360px;
+        max-width: 320px;
     }
-    
+
     .overlay-title {
-        font-size: 42px;
+        font-size: 36px;
     }
 }
 
-/* Medium Devices (tablets, 500px to 768px) */
+/* Medium Devices (tablets, 501px to 768px) */
 @media (min-width: 501px) and (max-width: 768px) {
     .container {
-        padding: 30px;
+        padding: 24px;
     }
-    
+
     .title {
-        font-size: 72px;
+        font-size: 56px;
     }
-    
+
+    .score-box {
+        min-width: 70px;
+        padding: 10px 16px;
+    }
+
+    .score-label {
+        font-size: 11px;
+    }
+
+    .score-value {
+        font-size: 17px;
+    }
+
     .grid {
         max-width: 440px;
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .btn {
+        padding: 10px 18px;
+        font-size: 14px;
+    }
+
+    .instructions {
+        font-size: 15px;
+    }
+}
+
+/* Large Devices (desktops, 769px and up) */
+@media (min-width: 769px) {
+    .container {
+        padding: 28px;
+    }
+
+    .title {
+        font-size: 64px;
+    }
+
+    .score-box {
+        min-width: 75px;
+        padding: 12px 20px;
+    }
+
+    .score-label {
+        font-size: 12px;
+    }
+
+    .score-value {
+        font-size: 22px;
+    }
+
+    .grid {
+        max-width: 480px;
         gap: 14px;
         padding: 14px;
     }
-    
-    .cell {
-        font-size: 40px;
+
+    .btn {
+        padding: 12px 24px;
+        font-size: 16px;
     }
-    
-    .cell[data-value="128"], 
-    .cell[data-value="256"], 
-    .cell[data-value="512"] {
-        font-size: 36px;
-    }
-    
-    .cell[data-value="1024"],
-    .cell[data-value="2048"] {
-        font-size: 32px;
+
+    .btn-icon {
+        font-size: 18px;
     }
 }
 
-/* Large Devices (desktops, 768px and up) */
-@media (min-width: 769px) {
+/* Very Large Screens (1200px and up) */
+@media (min-width: 1200px) {
     .title {
-        font-size: 80px;
+        font-size: 72px;
     }
-    
+
     .grid {
-        max-width: 480px;
+        max-width: 500px;
         gap: 16px;
         padding: 16px;
-    }
-    
-    .cell {
-        font-size: 44px;
-    }
-    
-    .cell[data-value="128"], 
-    .cell[data-value="256"], 
-    .cell[data-value="512"] {
-        font-size: 38px;
-    }
-    
-    .cell[data-value="1024"],
-    .cell[data-value="2048"] {
-        font-size: 34px;
     }
 }
 
 /* Touch Device Optimizations */
 @media (hover: none) and (pointer: coarse) {
     .btn {
-        padding: 14px 32px;
-        font-size: 18px;
+        padding: 12px 24px;
+        font-size: 16px;
     }
-    
+
     .btn:active {
         transform: scale(0.95);
     }
-    
+
     .grid {
         gap: 14px;
         padding: 14px;

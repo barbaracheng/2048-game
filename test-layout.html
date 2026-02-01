@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>2048 Game - 布局测试</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* 测试信息覆盖层 */
+        .test-info {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: monospace;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-pattern"></div>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">2048</h1>
+            <div class="header-right">
+                <div class="score-container">
+                    <div class="score-box">
+                        <span class="score-label">得分</span>
+                        <span id="score" class="score-value">0</span>
+                    </div>
+                    <div class="score-box">
+                        <span class="score-label">最高分</span>
+                        <span id="best-score" class="score-value">0</span>
+                    </div>
+                </div>
+                <div class="btn-container">
+                    <button id="new-game" class="btn btn-primary">
+                        <span class="btn-icon">↻</span>
+                        新游戏
+                    </button>
+                </div>
+            </div>
+        </header>
+        
+        <p class="instructions">使用方向键、WASD 或滑动移动方块</p>
+        
+        <div id="grid" class="grid"></div>
+        
+        <div id="game-overlay" class="game-overlay hidden">
+            <div class="overlay-content">
+                <h2 class="overlay-title" id="overlay-title">游戏结束</h2>
+                <p class="overlay-score">最终得分: <span id="final-score">0</span></p>
+                <button id="try-again" class="btn btn-primary btn-large">再试一次</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 测试信息显示 -->
+    <div class="test-info" id="test-info">
+        屏幕尺寸: <span id="screen-size">-</span> | 
+        格子数量: <span id="cell-count">0</span> |
+        布局状态: <span id="layout-status">✅</span>
+    </div>
+    
+    <script src="script.js"></script>
+    <script>
+        // 测试脚本
+        function updateTestInfo() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const size = `${width}x${height}`;
+            
+            // 格子数量
+            const cells = document.querySelectorAll('.cell').length;
+            
+            // 更新显示
+            document.getElementById('screen-size').textContent = size;
+            document.getElementById('cell-count').textContent = cells;
+            
+            // 检查布局
+            const grid = document.getElementById('grid');
+            const cellsElements = document.querySelectorAll('.cell');
+            let stable = true;
+            
+            if (cellsElements.length > 0) {
+                const firstCellSize = cellsElements[0].getBoundingClientRect().width;
+                
+                cellsElements.forEach(cell => {
+                    const cellSize = cell.getBoundingClientRect().width;
+                    if (Math.abs(cellSize - firstCellSize) > 1) {
+                        stable = false;
+                    }
+                });
+            }
+            
+            document.getElementById('layout-status').textContent = stable ? '✅ 稳定' : '❌ 不稳定';
+            document.getElementById('layout-status').style.color = stable ? '#4caf50' : '#f44336';
+        }
+        
+        // 监听窗口大小变化
+        window.addEventListener('resize', updateTestInfo);
+        
+        // 定期更新
+        setInterval(updateTestInfo, 1000);
+        
+        // 初始更新
+        setTimeout(updateTestInfo, 500);
+    </script>
+</body>
+</html>

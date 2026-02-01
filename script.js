@@ -309,7 +309,7 @@ class Game2048 {
                     }
                 }
             }
-        }, { passive: true });
+        });
     }
 }
 

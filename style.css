@@ -1,5 +1,6 @@
 /* ============================================
-   2048 Game - Enhanced Styles
+   2048 Game - Fixed Layout Styles
+   彻底修复：格子大小固定，header稳定，无布局抖动
    ============================================ */
 
 /* Reset & Base Styles */
@@ -11,11 +12,13 @@
 }
 
 :root {
-    /* Color Palette */
+    /* 颜色系统 */
     --bg-primary: #faf8ef;
     --bg-secondary: #bbada0;
     --text-primary: #776e65;
     --text-secondary: #eee4da;
+    
+    /* 格子颜色 */
     --tile-2: #eee4da;
     --tile-4: #ede0c8;
     --tile-8: #f2b179;
@@ -29,12 +32,11 @@
     --tile-2048: #edc22e;
     --tile-super: #3c3a32;
     
-    /* Animation Timing */
+    /* 动画时间 */
     --transition-fast: 0.15s ease;
     --transition-normal: 0.2s ease;
-    --transition-slow: 0.3s ease;
     
-    /* Shadow Colors */
+    /* 阴影颜色 */
     --shadow-light: rgba(238, 228, 218, 0.35);
     --shadow-medium: rgba(238, 228, 218, 0.73);
 }
@@ -50,7 +52,7 @@ body {
     padding: 20px;
 }
 
-/* Background Pattern */
+/* 背景图案 */
 .background-pattern {
     position: fixed;
     top: 0;
@@ -65,27 +67,31 @@ body {
     z-index: 0;
 }
 
-/* Container */
+/* 主容器 */
 .container {
     text-align: center;
     max-width: 500px;
     width: 100%;
-    padding: 24px;
+    padding: 20px;
     position: relative;
     z-index: 1;
 }
 
-/* Header */
+/* ============================================
+   Header - 稳定布局设计
+   ============================================ */
+
 .header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    gap: 12px;
 }
 
+/* 标题 - 固定尺寸 */
 .title {
-    font-size: 64px;
+    font-size: 56px;
     font-weight: 800;
     color: #776e65;
     margin: 0;
@@ -93,32 +99,40 @@ body {
     text-shadow: 2px 2px 0 rgba(0,0,0,0.05);
     line-height: 1;
     flex-shrink: 0;
+    width: 120px;
+    text-align: left;
 }
 
-/* Header Right - Scores and Button */
+/* Header右侧区域 - 固定布局 */
 .header-right {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 12px;
+    gap: 8px;
     flex-shrink: 0;
 }
 
-/* Score Container */
+/* 得分容器 */
 .score-container {
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 
+/* 得分框 - 固定尺寸 */
 .score-box {
     background: linear-gradient(145deg, #bbada0, #a89a8a);
-    padding: 10px 16px;
-    border-radius: 8px;
-    min-width: 75px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    width: 80px;
+    height: 46px;
     box-shadow:
         0 4px 8px var(--shadow-light),
         inset 0 1px 0 rgba(255,255,255,0.1);
     transition: transform var(--transition-fast);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .score-box:hover {
@@ -127,23 +141,24 @@ body {
 
 .score-label {
     display: block;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
     color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-bottom: 3px;
+    line-height: 1.2;
 }
 
 .score-value {
     display: block;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     color: white;
     text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    line-height: 1.2;
 }
 
-/* Score Animation */
+/* 得分更新动画 */
 .score-value.updated {
     animation: scoreUpdate 0.4s ease;
 }
@@ -154,20 +169,20 @@ body {
     100% { transform: scale(1); }
 }
 
-/* Controls */
-.controls {
+/* 按钮容器 - 确保按钮不被挤压 */
+.btn-container {
+    width: 100%;
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 16px;
 }
 
-/* Buttons */
+/* 按钮样式 */
 .btn {
     background: linear-gradient(145deg, #8f7a66, #7f6a56);
     color: white;
     border: none;
     padding: 10px 20px;
-    border-radius: 8px;
+    border-radius: 6px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
@@ -183,6 +198,8 @@ body {
     user-select: none;
     -webkit-user-select: none;
     white-space: nowrap;
+    min-width: 100px;
+    height: 40px;
 }
 
 .btn:hover {
@@ -206,28 +223,36 @@ body {
 }
 
 .btn-large {
-    padding: 16px 40px;
-    font-size: 18px;
+    padding: 14px 36px;
+    font-size: 16px;
+    min-width: 140px;
+    height: 50px;
 }
 
-/* Instructions */
+/* ============================================
+   说明文字
+   ============================================ */
+
 .instructions {
     color: var(--text-primary);
-    margin-bottom: 24px;
-    font-size: 15px;
+    margin-bottom: 20px;
+    font-size: 14px;
     font-weight: 500;
     opacity: 0.9;
 }
 
-/* Grid */
+/* ============================================
+   Grid - 固定格子大小
+   ============================================ */
+
 .grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(4, 1fr);
-    gap: 12px;
+    gap: 10px;
     background: linear-gradient(145deg, #bbada0, #a89a8a);
-    padding: 12px;
-    border-radius: 12px;
+    padding: 10px;
+    border-radius: 10px;
     width: 100%;
     max-width: 400px;
     aspect-ratio: 1;
@@ -239,43 +264,14 @@ body {
     touch-action: none;
 }
 
-/* Grid Background Cells (Empty Slots) */
-.grid::before {
-    content: '';
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    right: 12px;
-    bottom: 12px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    gap: 12px;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.grid::before::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    gap: 12px;
-}
-
-/* Tile Cells */
+/* 格子 - 固定尺寸，不受内容影响 */
 .cell {
     background: linear-gradient(145deg, #cdc1b4, #bfb3a8);
-    border-radius: 8px;
+    border-radius: 6px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 36px;
+    font-size: 28px;
     font-weight: 700;
     color: #776e65;
     transition: all var(--transition-normal);
@@ -284,14 +280,16 @@ body {
     box-shadow:
         0 4px 8px var(--shadow-light),
         inset 0 2px 0 rgba(255,255,255,0.2);
-    /* Ensure fixed size - cell size doesn't change with content */
-    aspect-ratio: 1;
+    /* 关键：确保格子大小完全固定 */
+    width: 100%;
+    height: 100%;
     overflow: hidden;
     word-break: break-all;
-    padding: 4px;
+    line-height: 1;
+    padding: 2px;
 }
 
-/* Tile Colors */
+/* 格子颜色 */
 .cell[data-value="2"] { 
     background: linear-gradient(145deg, #eee4da, #e4d9cd); 
     color: #776e65; 
@@ -329,35 +327,35 @@ body {
 .cell[data-value="128"] {
     background: linear-gradient(145deg, #edcf72, #e3c268);
     color: #f9f6f2;
-    font-size: 32px;
+    font-size: 24px;
     box-shadow: 0 4px 12px rgba(237, 207, 114, 0.4);
 }
 
 .cell[data-value="256"] {
     background: linear-gradient(145deg, #edcc61, #e3be57);
     color: #f9f6f2;
-    font-size: 32px;
+    font-size: 24px;
     box-shadow: 0 4px 12px rgba(237, 204, 97, 0.4);
 }
 
 .cell[data-value="512"] {
     background: linear-gradient(145deg, #edc850, #e3ba46);
     color: #f9f6f2;
-    font-size: 32px;
+    font-size: 24px;
     box-shadow: 0 4px 12px rgba(237, 200, 80, 0.4);
 }
 
 .cell[data-value="1024"] {
     background: linear-gradient(145deg, #edc53f, #e3b735);
     color: #f9f6f2;
-    font-size: 28px;
+    font-size: 20px;
     box-shadow: 0 4px 12px rgba(237, 197, 63, 0.4);
 }
 
 .cell[data-value="2048"] {
     background: linear-gradient(145deg, #edc22e, #e3b424);
     color: #f9f6f2;
-    font-size: 28px;
+    font-size: 20px;
     box-shadow: 0 4px 12px rgba(237, 194, 46, 0.5);
     animation: glow 2s ease-in-out infinite alternate;
 }
@@ -365,10 +363,10 @@ body {
 .cell[data-value^="40"], .cell[data-value^="81"] {
     background: linear-gradient(145deg, #3c3a32, #2e2c26);
     color: #f9f6f2;
-    font-size: 24px;
+    font-size: 18px;
 }
 
-/* Glow Animation for 2048 */
+/* 2048发光动画 */
 @keyframes glow {
     from {
         box-shadow: 
@@ -382,7 +380,7 @@ body {
     }
 }
 
-/* New Tile Animation */
+/* 新格子动画 */
 .cell.new {
     animation: appear 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
@@ -401,7 +399,7 @@ body {
     }
 }
 
-/* Merged Tile Animation */
+/* 合并动画 */
 .cell.merged {
     animation: merge 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
@@ -418,12 +416,15 @@ body {
     }
 }
 
-/* Movement Animation */
+/* 移动动画 */
 .cell.moving {
-    transition: transform var(--transition-slow) ease;
+    transition: transform var(--transition-normal) ease;
 }
 
-/* Game Overlay */
+/* ============================================
+   游戏结束覆盖层
+   ============================================ */
+
 .game-overlay {
     position: fixed;
     top: 0;
@@ -450,8 +451,8 @@ body {
 
 .overlay-content {
     background: rgba(255, 255, 255, 0.95);
-    padding: 48px 64px;
-    border-radius: 16px;
+    padding: 40px 56px;
+    border-radius: 12px;
     text-align: center;
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     animation: slideUp 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -469,16 +470,16 @@ body {
 }
 
 .overlay-title {
-    font-size: 48px;
+    font-size: 40px;
     font-weight: 800;
     color: #776e65;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .overlay-score {
-    font-size: 20px;
+    font-size: 18px;
     color: #776e65;
-    margin-bottom: 32px;
+    margin-bottom: 28px;
     font-weight: 500;
 }
 
@@ -488,38 +489,57 @@ body {
 }
 
 /* ============================================
-   Responsive Design
+   响应式设计 - 移动端优化
    ============================================ */
 
-/* Extra Small Devices (phones, 320px and up) */
+/* 小屏幕手机 (最大360px) */
 @media (max-width: 360px) {
     .container {
         padding: 12px;
     }
 
+    .header {
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
     .title {
         font-size: 40px;
-    }
-
-    .header {
-        gap: 10px;
-    }
-
-    .header-right {
-        gap: 8px;
+        width: 90px;
     }
 
     .score-box {
-        min-width: 60px;
-        padding: 8px 12px;
+        width: 68px;
+        height: 42px;
+        padding: 6px 10px;
     }
 
     .score-label {
-        font-size: 10px;
+        font-size: 9px;
     }
 
     .score-value {
-        font-size: 15px;
+        font-size: 14px;
+    }
+
+    .score-container {
+        gap: 6px;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        font-size: 13px;
+        min-width: 80px;
+        height: 36px;
+    }
+
+    .btn-icon {
+        font-size: 14px;
+    }
+
+    .instructions {
+        font-size: 12px;
+        margin-bottom: 16px;
     }
 
     .grid {
@@ -530,26 +550,72 @@ body {
     }
 
     .cell {
-        border-radius: 6px;
+        border-radius: 4px;
+        font-size: 22px;
+        padding: 2px;
+    }
+
+    .overlay-content {
+        padding: 24px 28px;
+        width: 90%;
+        max-width: 260px;
+    }
+
+    .overlay-title {
+        font-size: 28px;
+    }
+
+    .overlay-score {
+        font-size: 14px;
+    }
+}
+
+/* 中等屏幕手机 (361px - 420px) */
+@media (min-width: 361px) and (max-width: 420px) {
+    .container {
+        padding: 14px;
+    }
+
+    .title {
+        font-size: 48px;
+        width: 100px;
+    }
+
+    .score-box {
+        width: 74px;
+        height: 44px;
+    }
+
+    .score-label {
+        font-size: 10px;
+    }
+
+    .score-value {
+        font-size: 15px;
     }
 
     .btn {
-        padding: 8px 14px;
-        font-size: 13px;
+        padding: 9px 18px;
+        font-size: 14px;
+        min-width: 90px;
     }
 
-    .btn-icon {
-        font-size: 14px;
+    .grid {
+        gap: 9px;
+        padding: 9px;
+    }
+
+    .cell {
+        font-size: 24px;
     }
 
     .instructions {
         font-size: 13px;
-        margin-bottom: 16px;
     }
 
     .overlay-content {
-        padding: 28px 32px;
-        width: 90%;
+        padding: 28px 36px;
+        width: 85%;
         max-width: 280px;
     }
 
@@ -562,22 +628,125 @@ body {
     }
 }
 
-/* Small Devices (landscape phones, 361px to 500px) */
-@media (min-width: 361px) and (max-width: 500px) {
+/* 大屏手机 (421px - 480px) */
+@media (min-width: 421px) and (max-width: 480px) {
     .container {
         padding: 16px;
     }
 
     .title {
-        font-size: 48px;
+        font-size: 52px;
+        width: 110px;
     }
 
     .score-box {
-        min-width: 65px;
-        padding: 9px 14px;
+        width: 76px;
+        height: 45px;
+    }
+
+    .score-label {
+        font-size: 10px;
     }
 
     .score-value {
+        font-size: 16px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .grid {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .cell {
+        font-size: 26px;
+    }
+
+    .instructions {
+        font-size: 14px;
+    }
+}
+
+/* 平板 (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    .title {
+        font-size: 60px;
+        width: 125px;
+    }
+
+    .score-box {
+        width: 78px;
+        height: 45px;
+    }
+
+    .score-label {
+        font-size: 10px;
+    }
+
+    .score-value {
+        font-size: 17px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .grid {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .cell {
+        font-size: 26px;
+    }
+
+    .instructions {
+        font-size: 14px;
+    }
+}
+
+/* 桌面端 (769px+) */
+@media (min-width: 769px) {
+    .container {
+        padding: 24px;
+    }
+
+    .title {
+        font-size: 64px;
+        width: 130px;
+    }
+
+    .score-box {
+        width: 80px;
+        height: 46px;
+        padding: 8px 14px;
+    }
+
+    .score-label {
+        font-size: 10px;
+    }
+
+    .score-value {
+        font-size: 18px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 14px;
+        min-width: 100px;
+        height: 40px;
+    }
+
+    .btn-icon {
         font-size: 16px;
     }
 
@@ -586,131 +755,113 @@ body {
         padding: 10px;
     }
 
-    .instructions {
-        font-size: 14px;
-        margin-bottom: 20px;
-    }
-
-    .overlay-content {
-        padding: 32px 40px;
-        width: 85%;
-        max-width: 320px;
-    }
-
-    .overlay-title {
-        font-size: 36px;
-    }
-}
-
-/* Medium Devices (tablets, 501px to 768px) */
-@media (min-width: 501px) and (max-width: 768px) {
-    .container {
-        padding: 24px;
-    }
-
-    .title {
-        font-size: 56px;
-    }
-
-    .score-box {
-        min-width: 70px;
-        padding: 10px 16px;
-    }
-
-    .score-label {
-        font-size: 11px;
-    }
-
-    .score-value {
-        font-size: 17px;
-    }
-
-    .grid {
-        max-width: 440px;
-        gap: 12px;
-        padding: 12px;
-    }
-
-    .btn {
-        padding: 10px 18px;
-        font-size: 14px;
+    .cell {
+        font-size: 28px;
     }
 
     .instructions {
-        font-size: 15px;
+        font-size: 14px;
     }
 }
 
-/* Large Devices (desktops, 769px and up) */
-@media (min-width: 769px) {
-    .container {
-        padding: 28px;
-    }
-
+/* 大屏桌面 (1000px+) */
+@media (min-width: 1000px) {
     .title {
-        font-size: 64px;
-    }
-
-    .score-box {
-        min-width: 75px;
-        padding: 12px 20px;
-    }
-
-    .score-label {
-        font-size: 12px;
-    }
-
-    .score-value {
-        font-size: 22px;
+        font-size: 72px;
+        width: 145px;
     }
 
     .grid {
         max-width: 480px;
-        gap: 14px;
-        padding: 14px;
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .cell {
+        font-size: 30px;
     }
 
     .btn {
         padding: 12px 24px;
-        font-size: 16px;
-    }
-
-    .btn-icon {
-        font-size: 18px;
+        font-size: 15px;
+        min-width: 110px;
+        height: 44px;
     }
 }
 
-/* Very Large Screens (1200px and up) */
-@media (min-width: 1200px) {
-    .title {
-        font-size: 72px;
-    }
-
-    .grid {
-        max-width: 500px;
-        gap: 16px;
-        padding: 16px;
-    }
-}
-
-/* Touch Device Optimizations */
+/* 触摸设备优化 */
 @media (hover: none) and (pointer: coarse) {
     .btn {
-        padding: 12px 24px;
-        font-size: 16px;
+        padding: 10px 20px;
+        font-size: 14px;
+        min-width: 90px;
     }
 
     .btn:active {
         transform: scale(0.95);
     }
+}
+
+/* 横屏模式优化 */
+@media (max-height: 500px) and (orientation: landscape) {
+    .container {
+        padding: 10px;
+    }
+
+    .title {
+        font-size: 40px;
+        width: 80px;
+    }
+
+    .header {
+        margin-bottom: 10px;
+    }
+
+    .score-box {
+        width: 65px;
+        height: 38px;
+        padding: 6px 10px;
+    }
+
+    .score-label {
+        font-size: 9px;
+    }
+
+    .score-value {
+        font-size: 13px;
+    }
+
+    .btn {
+        padding: 6px 12px;
+        font-size: 12px;
+        min-width: 70px;
+        height: 32px;
+    }
+
+    .btn-icon {
+        font-size: 12px;
+    }
+
+    .instructions {
+        font-size: 11px;
+        margin-bottom: 10px;
+    }
 
     .grid {
-        gap: 14px;
-        padding: 14px;
+        max-width: 320px;
+        gap: 6px;
+        padding: 6px;
+    }
+
+    .cell {
+        font-size: 18px;
     }
 }
 
-/* Dark Mode Support (prefers-color-scheme) */
+/* ============================================
+   暗色模式支持
+   ============================================ */
+
 @media (prefers-color-scheme: dark) {
     :root {
         --bg-primary: #1a1a1a;
@@ -740,7 +891,10 @@ body {
     }
 }
 
-/* Reduce Motion for Accessibility */
+/* ============================================
+   辅助功能 - 减少动画
+   ============================================ */
+
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -751,14 +905,17 @@ body {
     }
 }
 
-/* Print Styles */
+/* ============================================
+   打印样式
+   ============================================ */
+
 @media print {
     body {
         background: white;
     }
     
     .background-pattern,
-    .controls,
+    .btn-container,
     .instructions {
         display: none;
     }

@@ -275,7 +275,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: clamp(24px, 8vw, 36px);
+    font-size: 36px;
     font-weight: 700;
     color: #776e65;
     transition: all var(--transition-normal);
@@ -329,35 +329,35 @@ body {
 .cell[data-value="128"] {
     background: linear-gradient(145deg, #edcf72, #e3c268);
     color: #f9f6f2;
-    font-size: clamp(22px, 7vw, 32px);
+    font-size: 32px;
     box-shadow: 0 4px 12px rgba(237, 207, 114, 0.4);
 }
 
 .cell[data-value="256"] {
     background: linear-gradient(145deg, #edcc61, #e3be57);
     color: #f9f6f2;
-    font-size: clamp(22px, 7vw, 32px);
+    font-size: 32px;
     box-shadow: 0 4px 12px rgba(237, 204, 97, 0.4);
 }
 
 .cell[data-value="512"] {
     background: linear-gradient(145deg, #edc850, #e3ba46);
     color: #f9f6f2;
-    font-size: clamp(22px, 7vw, 32px);
+    font-size: 32px;
     box-shadow: 0 4px 12px rgba(237, 200, 80, 0.4);
 }
 
 .cell[data-value="1024"] {
     background: linear-gradient(145deg, #edc53f, #e3b735);
     color: #f9f6f2;
-    font-size: clamp(20px, 6.5vw, 28px);
+    font-size: 28px;
     box-shadow: 0 4px 12px rgba(237, 197, 63, 0.4);
 }
 
 .cell[data-value="2048"] {
     background: linear-gradient(145deg, #edc22e, #e3b424);
     color: #f9f6f2;
-    font-size: clamp(20px, 6.5vw, 28px);
+    font-size: 28px;
     box-shadow: 0 4px 12px rgba(237, 194, 46, 0.5);
     animation: glow 2s ease-in-out infinite alternate;
 }
@@ -365,7 +365,7 @@ body {
 .cell[data-value^="40"], .cell[data-value^="81"] {
     background: linear-gradient(145deg, #3c3a32, #2e2c26);
     color: #f9f6f2;
-    font-size: clamp(18px, 6vw, 24px);
+    font-size: 24px;
 }
 
 /* Glow Animation for 2048 */

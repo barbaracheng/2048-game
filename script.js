@@ -268,15 +268,22 @@ class Game2048 {
         let touchEndY = 0;
         
         const grid = this.gridElement;
+        const minSwipeDistance = 30;
         
         grid.addEventListener('touchstart', (e) => {
+            if (this.gameOver) return;
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
-            e.preventDefault();
-        }, { passive: false });
+        }, { passive: true });
         
         grid.addEventListener('touchmove', (e) => {
-            e.preventDefault();
+            const deltaX = e.touches[0].clientX - touchStartX;
+            const deltaY = e.touches[0].clientY - touchStartY;
+            
+            // Only prevent scroll if swipe is significant
+            if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
+                e.preventDefault();
+            }
         }, { passive: false });
         
         grid.addEventListener('touchend', (e) => {
@@ -287,8 +294,6 @@ class Game2048 {
             
             const deltaX = touchEndX - touchStartX;
             const deltaY = touchEndY - touchStartY;
-            
-            const minSwipeDistance = 30;
             
             if (Math.abs(deltaX) > Math.abs(deltaY)) {
                 // Horizontal swipe

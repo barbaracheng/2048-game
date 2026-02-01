@@ -19,6 +19,7 @@ class Game2048 {
     init() {
         this.initGame();
         this.setupEventListeners();
+        this.setupTouchEvents();
         this.updateDisplay();
     }
     
@@ -258,6 +259,52 @@ class Game2048 {
             gameOverMessage.textContent = '游戏结束！';
             this.gridElement.appendChild(gameOverMessage);
         }
+    }
+    
+    setupTouchEvents() {
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+        
+        const grid = this.gridElement;
+        
+        grid.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+        
+        grid.addEventListener('touchend', (e) => {
+            if (this.gameOver) return;
+            
+            touchEndX = e.changedTouches[0].clientX;
+            touchEndY = e.changedTouches[0].clientY;
+            
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            
+            const minSwipeDistance = 30;
+            
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                // Horizontal swipe
+                if (Math.abs(deltaX) > minSwipeDistance) {
+                    if (deltaX > 0) {
+                        this.move('right');
+                    } else {
+                        this.move('left');
+                    }
+                }
+            } else {
+                // Vertical swipe
+                if (Math.abs(deltaY) > minSwipeDistance) {
+                    if (deltaY > 0) {
+                        this.move('down');
+                    } else {
+                        this.move('up');
+                    }
+                }
+            }
+        }, { passive: true });
     }
 }
 

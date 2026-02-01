@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048 Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>2048</h1>
+        <div class="score-container">
+            <div class="score">
+                <span>得分</span>
+                <span id="score">0</span>
+            </div>
+            <div class="score">
+                <span>最高分</span>
+                <span id="best-score">0</span>
+            </div>
+            <button id="new-game" class="btn">新游戏</button>
+        </div>
+        <p class="instructions">使用方向键或 WASD 移动方块</p>
+        <div id="grid" class="grid"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

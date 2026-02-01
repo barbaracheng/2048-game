@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048 Game Tests</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #4ec9b0;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #858585;
+            margin-bottom: 30px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        button {
+            background-color: #0e639c;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #1177bb;
+        }
+
+        button:active {
+            background-color: #0d5a8c;
+        }
+
+        .summary {
+            background-color: #252526;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-left: 4px solid #4ec9b0;
+        }
+
+        .summary h2 {
+            color: #4ec9b0;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .stat {
+            background-color: #333333;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .stat-label {
+            color: #858585;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .stat-value.pass {
+            color: #4ec9b0;
+        }
+
+        .stat-value.fail {
+            color: #f48771;
+        }
+
+        .stat-value.percent {
+            color: #dcdcaa;
+        }
+
+        .test-results {
+            background-color: #252526;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .test-results h2 {
+            color: #4ec9b0;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .test-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .test-item {
+            background-color: #333333;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #858585;
+            transition: transform 0.2s;
+        }
+
+        .test-item:hover {
+            transform: translateX(5px);
+        }
+
+        .test-item.pass {
+            border-left-color: #4ec9b0;
+        }
+
+        .test-item.fail {
+            border-left-color: #f48771;
+        }
+
+        .test-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .test-status {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .test-status.pass {
+            background-color: #4ec9b0;
+            color: #1e1e1e;
+        }
+
+        .test-status.fail {
+            background-color: #f48771;
+            color: #1e1e1e;
+        }
+
+        .test-message {
+            color: #858585;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .failed-tests {
+            background-color: #3a1d1d;
+            border: 1px solid #f48771;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .failed-tests h2 {
+            color: #f48771;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .console-output {
+            background-color: #1e1e1e;
+            border: 1px solid #3c3c3c;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .console-output h3 {
+            color: #4ec9b0;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .console-output pre {
+            color: #ce9178;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        @media (max-width: 768px) {
+            .summary-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 2048 Game Test Suite</h1>
+        <p class="subtitle">Comprehensive tests for core game functionality</p>
+        
+        <div class="controls">
+            <button onclick="runTests()">▶ Run All Tests</button>
+            <button onclick="runTouchTests()">📱 Run Touch Tests Only</button>
+            <button onclick="clearResults()">🗑 Clear Results</button>
+        </div>
+        
+        <div class="summary" id="summary" style="display: none;">
+            <h2>📊 Test Summary</h2>
+            <div class="summary-stats">
+                <div class="stat">
+                    <div class="stat-label">Total Tests</div>
+                    <div class="stat-value" id="total-tests">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Passed</div>
+                    <div class="stat-value pass" id="passed-tests">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Failed</div>
+                    <div class="stat-value fail" id="failed-tests">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Success Rate</div>
+                    <div class="stat-value percent" id="success-rate">0%</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-results" id="test-results" style="display: none;">
+            <h2>📝 Test Results</h2>
+            <div class="test-list" id="test-list"></div>
+        </div>
+        
+        <div class="failed-tests" id="failed-tests" style="display: none;">
+            <h2>❌ Failed Tests</h2>
+            <div class="test-list" id="failed-list"></div>
+        </div>
+        
+        <div class="console-output" id="console-output" style="display: none;">
+            <h3>📋 Console Output</h3>
+            <pre id="console-text"></pre>
+        </div>
+    </div>
+
+    <script src="test.js"></script>
+    <script>
+        // Capture console output
+        const originalLog = console.log;
+        const originalError = console.error;
+        const consoleOutput = [];
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            consoleOutput.push(args.join(' '));
+            updateConsoleOutput();
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            consoleOutput.push('❌ ' + args.join(' '));
+            updateConsoleOutput();
+        };
+
+        function updateConsoleOutput() {
+            const consoleText = document.getElementById('console-text');
+            if (consoleText) {
+                consoleText.textContent = consoleOutput.join('\n');
+            }
+        }
+
+        function clearResults() {
+            consoleOutput.length = 0;
+            updateConsoleOutput();
+            document.getElementById('summary').style.display = 'none';
+            document.getElementById('test-results').style.display = 'none';
+            document.getElementById('failed-tests').style.display = 'none';
+            document.getElementById('console-output').style.display = 'none';
+        }
+
+        function runTests() {
+            clearResults();
+            document.getElementById('console-output').style.display = 'block';
+            
+            // Use setTimeout to allow UI to update
+            setTimeout(() => {
+                const tester = new Game2048Test();
+                tester.runAll();
+                
+                displayResults(tester);
+            }, 100);
+        }
+
+        function runTouchTests() {
+            clearResults();
+            document.getElementById('console-output').style.display = 'block';
+            
+            setTimeout(() => {
+                const tester = new Game2048Test();
+                
+                // Run only touch-related tests
+                console.log('🧪 Running Touch Swipe Tests...\n');
+                
+                tester.testSwipeDirection();
+                
+                // Update display
+                const total = 1;
+                const passed = tester.passed;
+                const failed = tester.failed;
+                
+                displayCustomResults(total, passed, failed, tester.results);
+            }, 100);
+        }
+
+        function displayResults(tester) {
+            const total = tester.passed + tester.failed;
+            displayCustomResults(total, tester.passed, tester.failed, tester.results);
+        }
+
+        function displayCustomResults(total, passed, failed, results) {
+            const summary = document.getElementById('summary');
+            const testResults = document.getElementById('test-results');
+            const failedTests = document.getElementById('failed-tests');
+            
+            // Show summary
+            summary.style.display = 'block';
+            testResults.style.display = 'block';
+            
+            // Update summary stats
+            document.getElementById('total-tests').textContent = total;
+            document.getElementById('passed-tests').textContent = passed;
+            document.getElementById('failed-tests').textContent = failed;
+            document.getElementById('success-rate').textContent = 
+                total > 0 ? ((passed / total) * 100).toFixed(1) + '%' : '0%';
+            
+            // Build test list
+            const testList = document.getElementById('test-list');
+            testList.innerHTML = '';
+            
+            results.forEach(result => {
+                const item = document.createElement('div');
+                item.className = `test-item ${result.status === '✅ PASS' ? 'pass' : 'fail'}`;
+                
+                item.innerHTML = `
+                    <div class="test-name">
+                        ${result.test}
+                        <span class="test-status ${result.status === '✅ PASS' ? 'pass' : 'fail'}">
+                            ${result.status === '✅ PASS' ? 'PASS' : 'FAIL'}
+                        </span>
+                    </div>
+                    <div class="test-message">${result.message}</div>
+                `;
+                
+                testList.appendChild(item);
+            });
+            
+            // Show failed tests if any
+            if (failed > 0) {
+                failedTests.style.display = 'block';
+                const failedList = document.getElementById('failed-list');
+                failedList.innerHTML = '';
+                
+                results
+                    .filter(r => r.status === '❌ FAIL')
+                    .forEach(result => {
+                        const item = document.createElement('div');
+                        item.className = 'test-item fail';
+                        
+                        item.innerHTML = `
+                            <div class="test-name">${result.test}</div>
+                            <div class="test-message">${result.message}</div>
+                        `;
+                        
+                        failedList.appendChild(item);
+                    });
+            } else {
+                failedTests.style.display = 'none';
+            }
+        }
+
+        // Auto-run tests on page load (optional)
+        // document.addEventListener('DOMContentLoaded', () => {
+        //     runTests();
+        // });
+    </script>
+</body>
+</html>

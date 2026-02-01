@@ -367,7 +367,7 @@ class Game2048 {
     }
     
     /**
-     * Render the grid
+     * Render the grid - 优化以配合固定布局
      */
     renderGrid() {
         this.gridElement.innerHTML = '';
@@ -381,7 +381,7 @@ class Game2048 {
     }
     
     /**
-     * Create a cell element
+     * Create a cell element - 确保格子固定大小
      */
     createCell(row, col, value) {
         const cell = document.createElement('div');
@@ -392,6 +392,9 @@ class Game2048 {
         if (value > 0) {
             cell.textContent = value;
             cell.setAttribute('data-value', value);
+        } else {
+            // 空格子设置data-value为0以保持一致性
+            cell.setAttribute('data-value', '0');
         }
         
         return cell;
